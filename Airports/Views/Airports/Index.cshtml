@@ -1,0 +1,63 @@
+﻿@model  Airports.Models.AirportsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Filter","Airports"))
+{
+    <p>
+        Filter by country: @Html.DropDownList("Country", Model.Countries)
+        <input type="submit" value="Filter"/>
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.Name("Country")
+        </th>
+        <th>
+            @Html.Name("IATA")
+        </th>
+        <th>
+            @Html.Name("Name")
+        </th>
+        <th>
+            @Html.Name("Size")
+        </th>
+        <th>
+            @Html.Name("Status")
+        </th>
+        <th>
+            @Html.Name("Coordinates")
+        </th>
+    </tr>
+
+@foreach (var item in Model.Airports) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Iata)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+           
+            (@Html.DisplayFor(modelItem => item.Coordinates.Latitude),
+            @Html.DisplayFor(modelItem => item.Coordinates.Longitude))
+        </td>
+    </tr>
+                }
+
+</table>
