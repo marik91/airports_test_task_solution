@@ -6,11 +6,11 @@
 
 <h2>Index</h2>
 
-@using (Html.BeginForm("Filter","Airports"))
+@using (Html.BeginForm("Filter","Airports", FormMethod.Post))
 {
     <p>
-        Filter by country: @Html.DropDownList("Country", Model.Countries)
-        <input type="submit" value="Filter"/>
+        Filter by country: @Html.DropDownList("Country", Model.Countries, new { @class = "btn" })
+        <input type="submit" value="Filter" class= "btn"/>
     </p>
 }
 <table class="table">

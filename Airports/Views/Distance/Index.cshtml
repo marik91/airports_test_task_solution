@@ -1,4 +1,4 @@
-﻿@model Airports.Domain.Entities.Airport
+﻿@model  Airports.Models.DistanceViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -7,24 +7,40 @@
 <h2>Distance between airports</h2>
 
 <div>
-    <hr />
-    
-@using (Html.BeginForm("Calculate", "Distance"))
-{
-    <div>
-        <div class="col-md-5" >
-            <h4>Airport A</h4>
+    <hr/>
 
-            Airport A: @Html.DropDownList("airportA", new List<SelectListItem>());
+    @using (Html.BeginForm("Calculate", "Distance", FormMethod.Post))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4>Airport A</h4>
+                    @Html.DropDownList("airportA", Model.IataListA, new { @class = "btn" })
+                </div>
+                <div class="col-sm-5">
+                    <h4>Airport B</h4>
+                    @Html.DropDownList("airportB", Model.IataListB, new { @class = "btn" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <input type="submit" name="Calculate" class="btn btn-primary"/>
+                </div>
+            </div>
+            <div class="row">
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <div class="alert alert-danger">
+                        @Model.Error
+                    </div>
+                }
+                @if (Model.Distance != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Distance:</strong> @Model.Distance.Kilometers.ToString("F") km
+                    </div>
+                }
+            </div>
         </div>
-        <div class="col-md-5" >
-            <h4>Airport B</h4>
-            Airport B: @Html.DropDownList("airportB", new List<SelectListItem>());
-        </div>
-        <div class="col-md-5">
-            <input type="submit" name="Calculate"/>
-        </div>
-    </div>
-}
-    
+    }
 </div>

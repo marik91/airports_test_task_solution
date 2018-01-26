@@ -153,6 +153,7 @@
     <Compile Include="Controllers\AirportsController.cs" />
     <Compile Include="Controllers\DistanceController.cs" />
     <Compile Include="Models\AirportsViewModel.cs" />
+    <Compile Include="Models\DistanceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>

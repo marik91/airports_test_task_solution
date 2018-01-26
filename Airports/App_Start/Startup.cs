@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Airports.Domain.Settings;
 using Airports.Services.Settings;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -14,6 +15,7 @@ namespace Airports
         public void Configuration(IAppBuilder app)
         {
             var builder = new ContainerBuilder();
+            builder.RegisterModule<DomainModule>();
             builder.RegisterModule<ServicesModule>();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
