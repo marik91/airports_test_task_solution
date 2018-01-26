@@ -1,4 +1,5 @@
 ﻿using Airports.Services.QueryServices;
+using Airports.Services.Repositories;
 using Autofac;
 
 namespace Airports.Services.Settings
@@ -9,6 +10,7 @@ namespace Airports.Services.Settings
         {
             builder.RegisterType<AirportsQueryService>().AsImplementedInterfaces().InstancePerRequest();
             builder.RegisterType<CountryQueryService>().AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterType<AirportsFeedRepository>().AsSelf().InstancePerRequest();
         }
     }
 }

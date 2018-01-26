@@ -18,7 +18,7 @@ namespace Airports.Domain.ValueObjects
 
                 return new GeoCoordinate(latitude, longitude);
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

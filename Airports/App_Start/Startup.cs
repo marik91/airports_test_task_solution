@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,6 +16,7 @@ namespace Airports
         public void Configuration(IAppBuilder app)
         {
             var builder = new ContainerBuilder();
+            builder.RegisterModule<AutofacWebTypesModule>();
             builder.RegisterModule<DomainModule>();
             builder.RegisterModule<ServicesModule>();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
@@ -22,7 +24,7 @@ namespace Airports
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacMvc();
-            
+
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

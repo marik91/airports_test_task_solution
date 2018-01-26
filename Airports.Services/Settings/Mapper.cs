@@ -9,6 +9,8 @@ namespace Airports.Services.Settings
     {
         public static IMapper GetMapper()
         {
+            // Used automapper here, understand that it is kind of automagic with uknown process of mapping attributes
+            // but wanted to show this way of mapping instead of doing every property by hand in some extension method for example
             var config = new MapperConfiguration(
                 cfg =>
                     {

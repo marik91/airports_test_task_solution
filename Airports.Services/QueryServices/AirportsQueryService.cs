@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Airports.Domain.Entities;
+﻿using Airports.Domain.Entities;
 using Airports.Domain.QueryServices;
-using Airports.Services.Models;
 using Airports.Services.Repositories;
 using Airports.Services.Settings;
 using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using Mapper = Airports.Services.Settings.Mapper;
 
 namespace Airports.Services.QueryServices
@@ -15,10 +15,16 @@ namespace Airports.Services.QueryServices
     public class AirportsQueryService : IAirportQueryService
     {
         private readonly IMapper _mapper = Mapper.GetMapper();
+        private readonly AirportsFeedRepository _feedRepository;
+
+        public AirportsQueryService(AirportsFeedRepository feedRepository)
+        {
+            _feedRepository = feedRepository;
+        }
 
         public async Task<IEnumerable<Airport>> GetAllEuropeanAirportsAsync()
         {
-            var airportFeedItems = await AirportsFeedRepository.GetEuropeanAirportsAsync();
+            var airportFeedItems = await _feedRepository.GetEuropeanAirportsAsync();
             var airports = _mapper.Map<IEnumerable<Airport>>(airportFeedItems).ToList();
             SortAirports(airports);
 
@@ -27,7 +33,7 @@ namespace Airports.Services.QueryServices
 
         public async Task<IEnumerable<Airport>> GetAllEuropeanAirportsAsyncByCountry(string country)
         {
-            var airportFeedItems = await AirportsFeedRepository.GetEuropeanAirportsAsync();
+            var airportFeedItems = await _feedRepository.GetEuropeanAirportsAsync();
             airportFeedItems = airportFeedItems.Where(
                 c => c.CountryIsoCode.Equals(CountryMap.GetCountryCode(country), StringComparison.OrdinalIgnoreCase));
 
@@ -39,7 +45,7 @@ namespace Airports.Services.QueryServices
 
         public async Task<Airport> GetAsync(string iata)
         {
-            var airports = await AirportsFeedRepository.GetEuropeanAirportsAsync();
+            var airports = await _feedRepository.GetEuropeanAirportsAsync();
             var airport = airports.FirstOrDefault(a => a.Iata.Equals(iata, StringComparison.OrdinalIgnoreCase));
 
             return _mapper.Map<Airport>(airport);
