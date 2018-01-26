@@ -18,6 +18,21 @@ namespace Airports.Controllers
             _countryQueryService = countryQueryService;
         }
 
+        // 2.5h
+        // DropdownFor
+        [HttpPost]
+        public ActionResult Filter(string country)
+        {
+            if (country.Equals("All", StringComparison.OrdinalIgnoreCase))
+            {
+                country = null;
+            }
+
+            TempData["country"] = country;
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -40,21 +55,6 @@ namespace Airports.Controllers
             }
 
             return View(viewModel);
-        }
-
-        // 2.5h
-        // DropdownFor
-        [HttpPost]
-        public ActionResult Filter(string country)
-        {
-            if (country.Equals("All", StringComparison.OrdinalIgnoreCase))
-            {
-                country = null;
-            }
-
-            TempData["country"] = country;
-
-            return RedirectToAction("Index");
         }
     }
 }

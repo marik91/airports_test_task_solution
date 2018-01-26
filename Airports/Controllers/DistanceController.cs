@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Airports.Domain.CommandHandler;
-using Airports.Domain.Commands;
-using Airports.Domain.QueryServices;
-using Airports.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Airports.Domain.CommandHandler;
+using Airports.Domain.Commands;
+using Airports.Domain.QueryServices;
 using Airports.Domain.ValueObjects;
+using Airports.Models;
 
 namespace Airports.Controllers
 {
@@ -15,10 +15,33 @@ namespace Airports.Controllers
         private readonly IAirportQueryService _airportQueryService;
         private readonly IAirportsCommandHandler _airportsCommandHandler;
 
-        public DistanceController(IAirportQueryService airportQueryService, IAirportsCommandHandler airportsCommandHandler)
+        public DistanceController(
+            IAirportQueryService airportQueryService,
+            IAirportsCommandHandler airportsCommandHandler)
         {
             _airportQueryService = airportQueryService;
             _airportsCommandHandler = airportsCommandHandler;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Calculate(string airportA, string airportB)
+        {
+            var distance = await _airportsCommandHandler.HandleAsync(
+                new CalculateDistanceCommand { IataA = airportA, IataB = airportB });
+
+            TempData["airportA"] = airportA;
+            TempData["airportB"] = airportB;
+
+            if (distance == null)
+            {
+                TempData["error"] = "Missing some of airport coordinates.";
+            }
+            else
+            {
+                TempData["distance"] = distance;
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -40,27 +63,6 @@ namespace Airports.Controllers
             }
 
             return View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Calculate(string airportA, string airportB)
-        {
-            var distance = await _airportsCommandHandler.HandleAsync(
-                    new CalculateDistanceCommand { IataA = airportA, IataB = airportB });
-
-            TempData["airportA"] = airportA;
-            TempData["airportB"] = airportB;
-
-            if (distance == null)
-            {
-                TempData["error"] = "Missing some of airport coordinates.";
-            }
-            else
-            {
-                TempData["distance"] = distance;
-            }
-
-            return RedirectToAction("Index");
         }
 
         private void SetSelectedAirports(DistanceViewModel viewModel)

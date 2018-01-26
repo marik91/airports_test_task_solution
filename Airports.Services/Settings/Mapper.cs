@@ -18,7 +18,9 @@ namespace Airports.Services.Settings
                                 dest => dest.Coordinates,
                                 opt => opt.MapFrom(
                                     src => new Coordinates { Latitude = src.Latitude, Longitude = src.Longitude }))
-                            .ForMember(dest => dest.Country, opt => opt.MapFrom(src => CountryMap.GetCountry(src.CountryIsoCode)));
+                            .ForMember(
+                                dest => dest.Country,
+                                opt => opt.MapFrom(src => CountryMap.GetCountry(src.CountryIsoCode)));
                     });
 
             return config.CreateMapper();

@@ -10,7 +10,7 @@
 {
     <p>
         Filter by country: @Html.DropDownList("Country", Model.Countries, new { @class = "btn" })
-        <input type="submit" value="Filter" class= "btn"/>
+        <input type="submit" value="Filter" class= "btn" />
     </p>
 }
 <table class="table">
@@ -53,11 +53,10 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-           
+
             (@Html.DisplayFor(modelItem => item.Coordinates.Latitude),
             @Html.DisplayFor(modelItem => item.Coordinates.Longitude))
         </td>
     </tr>
                 }
-
 </table>

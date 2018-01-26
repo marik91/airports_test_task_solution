@@ -13,12 +13,12 @@ namespace Airports.Models
             IataListB.AddRange(iataList.Select(i => new SelectListItem { Text = i, Value = i }));
         }
 
-        public List<SelectListItem> IataListA { get; } = new List<SelectListItem>();
-
-        public List<SelectListItem> IataListB { get; } = new List<SelectListItem>();
-
         public Distance Distance { get; set; }
 
         public string Error { get; set; }
+
+        public List<SelectListItem> IataListA { get; } = new List<SelectListItem>();
+
+        public List<SelectListItem> IataListB { get; } = new List<SelectListItem>();
     }
 }

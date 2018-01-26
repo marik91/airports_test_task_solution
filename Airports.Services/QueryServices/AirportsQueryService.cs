@@ -1,21 +1,20 @@
-﻿using Airports.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Airports.Domain.Entities;
 using Airports.Domain.QueryServices;
 using Airports.Services.Repositories;
 using Airports.Services.Settings;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using Mapper = Airports.Services.Settings.Mapper;
 
 namespace Airports.Services.QueryServices
 {
     public class AirportsQueryService : IAirportQueryService
     {
-        private readonly IMapper _mapper = Mapper.GetMapper();
         private readonly AirportsFeedRepository _feedRepository;
+        private readonly IMapper _mapper = Mapper.GetMapper();
 
         public AirportsQueryService(AirportsFeedRepository feedRepository)
         {

@@ -31,8 +31,8 @@ namespace Airports.Services.Settings
                 SetupList();
             }
 
-            var countryCode =
-                _countriesList?.FirstOrDefault(c => c.Name.Equals(country, StringComparison.OrdinalIgnoreCase))?.Code;
+            var countryCode = _countriesList
+                ?.FirstOrDefault(c => c.Name.Equals(country, StringComparison.OrdinalIgnoreCase))?.Code;
 
             return countryCode;
         }
