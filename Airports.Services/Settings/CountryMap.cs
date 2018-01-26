@@ -20,7 +20,21 @@ namespace Airports.Services.Settings
 
             var country =
                 _countriesList?.FirstOrDefault(c => c.Code.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
+
             return country?.Name ?? countryCode;
+        }
+
+        public static string GetCountryCode(string country)
+        {
+            if (_countriesList == null)
+            {
+                SetupList();
+            }
+
+            var countryCode =
+                _countriesList?.FirstOrDefault(c => c.Name.Equals(country, StringComparison.OrdinalIgnoreCase))?.Code;
+
+            return countryCode;
         }
 
         private static void SetupList()

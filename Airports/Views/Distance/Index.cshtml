@@ -1,0 +1,30 @@
+﻿@model Airports.Domain.Entities.Airport
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Distance between airports</h2>
+
+<div>
+    <hr />
+    
+@using (Html.BeginForm("Calculate", "Distance"))
+{
+    <div>
+        <div class="col-md-5" >
+            <h4>Airport A</h4>
+
+            Airport A: @Html.DropDownList("airportA", new List<SelectListItem>());
+        </div>
+        <div class="col-md-5" >
+            <h4>Airport B</h4>
+            Airport B: @Html.DropDownList("airportB", new List<SelectListItem>());
+        </div>
+        <div class="col-md-5">
+            <input type="submit" name="Calculate"/>
+        </div>
+    </div>
+}
+    
+</div>

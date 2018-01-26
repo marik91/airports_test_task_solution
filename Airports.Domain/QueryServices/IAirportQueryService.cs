@@ -8,7 +8,7 @@ namespace Airports.Domain.QueryServices
     {
         Task<IEnumerable<Airport>> GetAllEuropeanAirportsAsync();
 
-        Task<IEnumerable<Airport>> GetAirportsAsync(string country);
+        Task<IEnumerable<Airport>> GetAllEuropeanAirportsAsyncByCountry(string country);
 
         Task<Airport> GetAsync(string iata);
     }

@@ -1,25 +1,20 @@
-﻿using Airports.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Airports.Domain.Entities;
 
 namespace Airports.Models
 {
     public class AirportsViewModel
     {
-       
-        public AirportsViewModel(IEnumerable<Airport> airports)
+        public AirportsViewModel(IEnumerable<string> cities)
         {
-            Airports = airports;
-
-            var distinctCountries = airports.Select(a => a.Country).Distinct();
-            Countries = distinctCountries.Select(c => new SelectListItem { Text = c, Value = c });
+            Countries.Add(new SelectListItem { Text = "All", Value = "All" });
+            Countries.AddRange(cities.Select(c => new SelectListItem { Text = c, Value = c }));
         }
 
-        public IEnumerable<Airport> Airports { get; }
+        public List<Airport> Airports { get; } = new List<Airport>();
 
-        public IEnumerable<SelectListItem> Countries { get; }
-
-        public string CountryFilterValue { get; set; }
+        public List<SelectListItem> Countries { get; } = new List<SelectListItem>();
     }
 }

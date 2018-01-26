@@ -8,6 +8,7 @@ namespace Airports.Services.Settings
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AirportsQueryService>().AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterType<CountryQueryService>().AsImplementedInterfaces().InstancePerRequest();
         }
     }
 }

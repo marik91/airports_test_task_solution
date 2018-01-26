@@ -43,6 +43,7 @@
     <Compile Include="Entities\Airport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryServices\IAirportQueryService.cs" />
+    <Compile Include="QueryServices\ICountryQueryService.cs" />
     <Compile Include="ValueObjects\Coordinates.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

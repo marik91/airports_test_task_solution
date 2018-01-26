@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Airports.Domain.QueryServices;
 using Airports.Models;
@@ -7,18 +9,35 @@ namespace Airports.Controllers
 {
     public class AirportsController : Controller
     {
-        private readonly IAirportQueryService _queryService;
+        private readonly IAirportQueryService _airportQueryService;
+        private readonly ICountryQueryService _countryQueryService;
 
-        public AirportsController(IAirportQueryService queryService)
+        public AirportsController(IAirportQueryService airportQueryService, ICountryQueryService countryQueryService)
         {
-            _queryService = queryService;
+            _airportQueryService = airportQueryService;
+            _countryQueryService = countryQueryService;
         }
 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var viewModel = new AirportsViewModel(
-                await _queryService.GetAllEuropeanAirportsAsync());
+            var viewModel = new AirportsViewModel(await _countryQueryService.GetAllCountriesAsync());
+
+            if (TempData["country"] is string country)
+            {
+                TempData["country"] = country;
+                viewModel.Airports.AddRange(await _airportQueryService.GetAllEuropeanAirportsAsyncByCountry(country));
+                var filter = viewModel.Countries.FirstOrDefault(c => c.Value.Equals(country));
+
+                if (filter != null)
+                {
+                    filter.Selected = true;
+                }
+            }
+            else
+            {
+                viewModel.Airports.AddRange(await _airportQueryService.GetAllEuropeanAirportsAsync());
+            }
 
             return View(viewModel);
         }
@@ -28,6 +47,13 @@ namespace Airports.Controllers
         [HttpPost]
         public ActionResult Filter(string country)
         {
+            if (country.Equals("All", StringComparison.OrdinalIgnoreCase))
+            {
+                country = null;
+            }
+
+            TempData["country"] = country;
+
             return RedirectToAction("Index");
         }
     }
